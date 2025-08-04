@@ -1,0 +1,42 @@
+import 'dart:io';
+
+void main() {
+  stdout.write('coversion (C a F o F a C): ');
+  final tipo = stdin.readLineSync()?.toUpperCase();
+
+  stdout.write('Escribir temperatura: ');
+  final valorInput = stdin.readLineSync();
+
+  if (tipo == null || valorInput == null || tipo.isEmpty || valorInput.isEmpty) {
+    print('No es vaido');
+    return;
+  }
+
+  final valor = double.tryParse(valorInput);
+  if (valor == null) {
+    print('escribir un numero por favor');
+    return;
+  }
+
+  try {
+    final resultado = convertirTemperatura(tipo, valor);
+    print('resutado: $resultado');
+  } on FormatException catch (e) {
+    print('error: ${e.message}');
+  } catch (e) {
+    print('lo siento hay un error: $e');
+  }
+}
+
+String convertirTemperatura(String tipo, double valor) {
+  switch (tipo) {
+    case 'C A F':
+      final fahrenheit = (valor * 9 / 5) + 32;
+      return '$valor °C = ${fahrenheit.toStringAsFixed(2)} °F';
+    case 'F A C':
+      final celsius = (valor - 32) * 5 / 9;
+      return '$valor °F = ${celsius.toStringAsFixed(2)} °C';
+    default:
+      throw FormatException('este no es aceptado: $tipo');
+  }
+}

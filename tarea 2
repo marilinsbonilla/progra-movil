@@ -1,0 +1,32 @@
+import 'dart:io';
+
+void main() {
+  stdout.write('Escribir ago: ');
+  final input = stdin.readLineSync();
+
+
+  try {
+    final result = palin(input);
+    if (result) {
+      print('si es');
+    } else {
+      print('no es');
+    }
+  } on FormatException catch (e) {
+    print('Lo siento hay un error: ${e.message}');
+  }
+}
+
+bool palin(String texto) {
+  if (texto.isEmpty) {
+    throw FormatException('no hay nada ingrsado');
+  }
+
+  final texclean = texto
+      .toLowerCase()
+      .replaceAll(RegExp(r'[^a-z0-9]'), ''); 
+
+  final texInv = texclean.split('').reversed.join();
+
+  return texclean == texInv;
+}
